@@ -10,12 +10,16 @@ export const GitHub = (props) => (
     <button className='btn btn-default' onClick={props.doubleAsync}>
       Double (Async)
     </button>
+    <button className='btn btn-default' onClick={props.gitHubLogin}>
+      Login with GitHub
+    </button>
   </div>
 );
 
 GitHub.propTypes = {
   counter     : React.PropTypes.number.isRequired,
   doubleAsync : React.PropTypes.func.isRequired,
+  gitHubLogin : React.PropTypes.func.isRequired,
   increment   : React.PropTypes.func.isRequired
 };
 

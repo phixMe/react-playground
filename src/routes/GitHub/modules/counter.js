@@ -3,6 +3,7 @@
 // ------------------------------------
 export const COUNTER_INCREMENT = 'COUNTER_INCREMENT';
 export const COUNTER_DOUBLE_ASYNC = 'COUNTER_DOUBLE_ASYNC';
+export const GITHUB_LOGIN = 'GITHUB_LOGIN';
 
 // ------------------------------------
 // Actions
@@ -12,6 +13,13 @@ export function increment (value = 1) {
     type    : COUNTER_INCREMENT,
     payload : value
   };
+}
+
+export function gitHubLogin (value) {
+  return {
+    type  : GITHUB_LOGIN,
+    payload : value
+  }
 }
 
 /*  This is a thunk, meaning it is a function that immediately
@@ -34,6 +42,7 @@ export const doubleAsync = () => {
 
 export const actions = {
   increment,
+  gitHubLogin,
   doubleAsync
 };
 
@@ -42,6 +51,7 @@ export const actions = {
 // ------------------------------------
 const ACTION_HANDLERS = {
   [COUNTER_INCREMENT]    : (state, action) => state + action.payload,
+  [GITHUB_LOGIN] : (state, action) => state + action.payload,
   [COUNTER_DOUBLE_ASYNC] : (state, action) => state * 2
 };
 

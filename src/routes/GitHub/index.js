@@ -9,14 +9,14 @@ export default (store) => ({
     require.ensure([], (require) => {
       /*  Webpack - use require callback to define
           dependencies for bundling   */
-      const Counter = require('./containers/GithubContainer').default;
+      const GitHub = require('./containers/GithubContainer').default;
       const reducer = require('./modules/counter').default;
 
       /*  Add the reducer to the store on key 'counter'  */
       injectReducer(store, { key: 'counter', reducer });
 
       /*  Return getComponent   */
-      cb(null, Counter);
+      cb(null, GitHub);
 
     /* Webpack named bundle   */
     }, 'counter');
