@@ -1,49 +1,30 @@
+import axios from 'axios';
+
 // ------------------------------------
 // Constants
 // ------------------------------------
 export const COUNTER_INCREMENT = 'COUNTER_INCREMENT';
 export const COUNTER_DOUBLE_ASYNC = 'COUNTER_DOUBLE_ASYNC';
-export const GITHUB_LOGIN = 'GITHUB_LOGIN';
+
+export const GET_USERS_SUCCESS = 'GET_USERS_SUCCESS';
+export const GET_USERS_ERROR = 'GET_USERS_ERROR';
 
 // ------------------------------------
 // Actions
 // ------------------------------------
-export function increment (value = 1) {
-  return {
-    type    : COUNTER_INCREMENT,
-    payload : value
-  };
-}
-
-export function gitHubLogin (value) {
-  return {
-    type  : GITHUB_LOGIN,
-    payload : value
+export function gitHubLogin () {
+  return (dispatch) => {
+    dispatch({type: 'GET_USERS_START'});
+    axios.get('http://rest.learncode.academy/api/wstern/users').then((response) => {
+      dispatch({type: 'GET_USERS_SUCCESS', payload: response.data});
+    }).catch((err) =>{
+      dispatch({type: 'GET_USERS_ERROR', payload: err});
+    })
   }
 }
 
-/*  This is a thunk, meaning it is a function that immediately
-    returns a function for lazy evaluation. It is incredibly useful for
-    creating async actions, especially when combined with redux-thunk! */
-
-export const doubleAsync = () => {
-  return (dispatch, getState) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        dispatch({
-          type    : COUNTER_DOUBLE_ASYNC,
-          payload : getState().counter
-        });
-        resolve();
-      }, 200);
-    });
-  };
-};
-
 export const actions = {
-  increment,
   gitHubLogin,
-  doubleAsync
 };
 
 // ------------------------------------
@@ -51,7 +32,8 @@ export const actions = {
 // ------------------------------------
 const ACTION_HANDLERS = {
   [COUNTER_INCREMENT]    : (state, action) => state + action.payload,
-  [GITHUB_LOGIN] : (state, action) => state + action.payload,
+  [GET_USERS_SUCCESS] : (state, action) => action.payload,
+  [GET_USERS_ERROR] : (state, action) => action.payload,
   [COUNTER_DOUBLE_ASYNC] : (state, action) => state * 2
 };
 

@@ -1,11 +1,9 @@
 import { connect } from 'react-redux';
-import { increment, gitHubLogin, doubleAsync } from '../modules/counter';
+import { gitHubLogin } from '../modules/counter';
 import GitHub from '../components/GitHub';
 
 const mapDispatchToProps = {
-  increment : () => increment(1),
-  gitHubLogin: () => gitHubLogin(4),
-  doubleAsync
+  gitHub: () => gitHubLogin(),
 };
 
 const mapStateToProps = (state) => ({
