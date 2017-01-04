@@ -13,13 +13,37 @@ export const GET_USERS_ERROR = 'GET_USERS_ERROR';
 // Actions
 // ------------------------------------
 export function gitHubLogin () {
-  return (dispatch) => {
-    dispatch({type: 'GET_USERS_START'});
-    axios.get('http://rest.learncode.academy/api/wstern/users').then((response) => {
-      dispatch({type: 'GET_USERS_SUCCESS', payload: response.data});
-    }).catch((err) =>{
-      dispatch({type: 'GET_USERS_ERROR', payload: err});
-    })
+  return (dispatch, getState) => {
+    return new Promise((resolve) => {
+      dispatch({type: 'GET_USERS_START'});
+      axios.get('http://rest.learncode.academy/api/wstern/users').then((response) => {
+        dispatch({type: 'GET_USERS_SUCCESS', payload: response.data});
+        resolve();
+      }).catch((err) => {
+        dispatch({type: 'GET_USERS_ERROR', payload: err});
+        reject();
+      })
+    });
+  };
+
+  // return (dispatch, getState) => {
+  //   dispatch({type: 'GET_USERS_START'});
+  //   axios.get('http://rest.learncode.academy/api/wstern/users').then((response) => {
+  //     dispatch({type: 'GET_USERS_SUCCESS', payload: response.data});
+  //   }).catch((err) =>{
+  //     dispatch({type: 'GET_USERS_ERROR', payload: err});
+  //   })
+  // }
+}
+
+export function loadCategories() {
+  return {
+    type: 'LOAD',
+    payload: {
+      request:{
+        url:'/wstern/users'
+      }
+    }
   }
 }
 
@@ -43,6 +67,8 @@ const ACTION_HANDLERS = {
 const initialState = 0;
 export default function counterReducer (state = initialState, action) {
   const handler = ACTION_HANDLERS[action.type];
+
+  console.log(state);
 
   return handler ? handler(state, action) : state;
 }

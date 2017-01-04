@@ -10,15 +10,15 @@ export default (store) => ({
       /*  Webpack - use require callback to define
           dependencies for bundling   */
       const GitHub = require('./containers/GithubContainer').default;
-      const reducer = require('./modules/counter').default;
+      const reducer = require('./modules/github').default;
 
       /*  Add the reducer to the store on key 'counter'  */
-      injectReducer(store, { key: 'counter', reducer });
+      injectReducer(store, { key: 'gitHubResp', reducer });
 
       /*  Return getComponent   */
       cb(null, GitHub);
 
     /* Webpack named bundle   */
-    }, 'counter');
+    }, 'github');
   }
 });

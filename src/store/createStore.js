@@ -2,15 +2,23 @@ import { applyMiddleware, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 
+import axios from 'axios';
+import axiosMiddleware from 'redux-axios-middleware';
+
 import { browserHistory } from 'react-router';
 import makeRootReducer from './reducers';
 import { updateLocation } from './location';
+
+const client = axios.create({ //all axios can be used, shown in axios documentation
+  baseURL:'http://rest.learncode.academy/api',
+  responseType: 'json'
+});
 
 export default (initialState = {}) => {
   // ======================================================
   // Middleware Configuration
   // ======================================================
-  const middleware = [thunk ,logger()];
+  const middleware = [thunk, axiosMiddleware(client) ,logger()];
 
   // ======================================================
   // Store Enhancers
